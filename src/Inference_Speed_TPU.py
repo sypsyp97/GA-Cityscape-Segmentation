@@ -1,10 +1,11 @@
-from pycoral.utils.edgetpu import make_interpreter
-import numpy as np
-from PIL import Image
 import time
 
-image_file = 'test.jpg'
-image = Image.open(image_file).convert('RGB')
+import numpy as np
+from PIL import Image
+from pycoral.utils.edgetpu import make_interpreter
+
+image_file = "test.jpg"
+image = Image.open(image_file).convert("RGB")
 image = np.array(image)
 
 
@@ -32,10 +33,10 @@ def inference_time_tpu(edgetpu_model_name):
     input_details = interpreter.get_input_details()[0]
 
     # Prepare the input image tensor and cast it to the appropriate data type
-    input_tensor = np.expand_dims(image, axis=0).astype(input_details['dtype'])
+    input_tensor = np.expand_dims(image, axis=0).astype(input_details["dtype"])
 
     # Set the input tensor for the interpreter
-    interpreter.set_tensor(input_details['index'], input_tensor)
+    interpreter.set_tensor(input_details["index"], input_tensor)
 
     # Record the start time, run the interpreter, and calculate the inference time
     start_time = time.monotonic()

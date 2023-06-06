@@ -1,4 +1,5 @@
 import tensorflow as tf
+
 from dataset.Dataset import x_test
 
 
@@ -71,7 +72,7 @@ def convert_to_tflite(keras_model, generation=0, i=0, time=0):
     path = f"model_{i}_gen_{generation}_time_{time}.tflite"
 
     # Save the TFLite model to disk
-    with open(path, 'wb') as f:
+    with open(path, "wb") as f:
         f.write(tflite_model)
 
     # Clean up the converter

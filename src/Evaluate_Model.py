@@ -57,8 +57,8 @@ def evaluate_tflite_model(tflite_model, x_test, y_test, tfl_int8=True):
     output_details = interpreter.get_output_details()
     input_index = input_details[0]["index"]
     output_index = output_details[0]["index"]
-    scale_in, zero_point_in = input_details[0]['quantization']
-    scale_out, zero_point_out = output_details[0]['quantization']
+    scale_in, zero_point_in = input_details[0]["quantization"]
+    scale_out, zero_point_out = output_details[0]["quantization"]
 
     prediction_labels = []
     test_labels = []
@@ -79,7 +79,11 @@ def evaluate_tflite_model(tflite_model, x_test, y_test, tfl_int8=True):
             output = (output - zero_point_out) * scale_out
         digit = np.argmax(output[0])
         prediction_labels.append(digit)
-        test_labels.append(np.argmax(y_test[i], ))
+        test_labels.append(
+            np.argmax(
+                y_test[i],
+            )
+        )
 
     prediction_labels = np.array(prediction_labels)
     test_labels = np.array(test_labels)
@@ -88,6 +92,3 @@ def evaluate_tflite_model(tflite_model, x_test, y_test, tfl_int8=True):
     print("Quant TF Lite accuracy: {:.3%}".format(tflite_accuracy.result()))
 
     return float(tflite_accuracy.result())
-
-
-

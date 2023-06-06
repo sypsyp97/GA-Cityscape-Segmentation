@@ -1,7 +1,7 @@
-from keras import layers
-import tensorflow_addons as tfa
-from tensorflow import keras
 import tensorflow as tf
+import tensorflow_addons as tfa
+from keras import layers
+from tensorflow import keras
 
 from src.Decode_Block import decoded_block
 from src.Gene_Pool import conv_block
@@ -54,7 +54,9 @@ def find_layers_with_downsampling(model):
         current_shape = get_spatial_dimensions(current_layer)
         next_shape = get_spatial_dimensions(next_layer)
 
-        if current_shape is None or next_shape is None:  # Skip layers without spatial dimensions
+        if (
+            current_shape is None or next_shape is None
+        ):  # Skip layers without spatial dimensions
             continue
 
         if current_shape[0] > next_shape[0] and current_shape[1] > next_shape[1]:
@@ -128,17 +130,27 @@ def create_model(model_array, input_shape=(160, 160, 3), num_classes=34):
     x = encoder_output
     for i in range(len(skip_outputs) - 1, -1, -1):
         skip_output = skip_outputs[i]
-        x = tf.keras.layers.UpSampling2D(size=2, interpolation='bilinear')(x)
-        x = tf.keras.layers.Conv2D(skip_output.shape[-1], kernel_size=3, padding='same', activation=tf.nn.relu)(x)
+        x = tf.keras.layers.UpSampling2D(size=2, interpolation="bilinear")(x)
+        x = tf.keras.layers.Conv2D(
+            skip_output.shape[-1], kernel_size=3, padding="same", activation=tf.nn.relu
+        )(x)
         x = tf.image.resize(x, skip_output.shape[1:3])
         x = tf.keras.layers.Concatenate()([x, skip_output])
-        x = tf.keras.layers.Conv2D(filters=skip_output.shape[-1], kernel_size=3, padding='same', activation=tf.nn.relu)(
-            x)
+        x = tf.keras.layers.Conv2D(
+            filters=skip_output.shape[-1],
+            kernel_size=3,
+            padding="same",
+            activation=tf.nn.relu,
+        )(x)
 
     # Final upsampling layer and output
-    x = tf.keras.layers.UpSampling2D(size=2, interpolation='bilinear')(x)
-    x = tf.keras.layers.Conv2D(filters=num_classes, kernel_size=3, padding='same', activation=tf.nn.relu)(x)
-    output = tf.keras.layers.Conv2D(num_classes, kernel_size=1, activation=tf.nn.softmax)(x)
+    x = tf.keras.layers.UpSampling2D(size=2, interpolation="bilinear")(x)
+    x = tf.keras.layers.Conv2D(
+        filters=num_classes, kernel_size=3, padding="same", activation=tf.nn.relu
+    )(x)
+    output = tf.keras.layers.Conv2D(
+        num_classes, kernel_size=1, activation=tf.nn.softmax
+    )(x)
     output = tf.image.resize(output, base_model.input.shape[1:3])
 
     # Create and compile the U-Net model
@@ -157,12 +169,12 @@ def model_summary(model):
         A Keras model.
     """
     model.summary()
-    print('Number of trainable weights = {}'.format(len(model.trainable_weights)))
+    print("Number of trainable weights = {}".format(len(model.trainable_weights)))
 
 
-def train_model(train_ds, val_ds,
-                model, epochs=30,
-                checkpoint_filepath="checkpoints/checkpoint"):
+def train_model(
+    train_ds, val_ds, model, epochs=30, checkpoint_filepath="checkpoints/checkpoint"
+):
     """
     Train a Keras model on the provided datasets.
 
@@ -192,10 +204,12 @@ def train_model(train_ds, val_ds,
         A History object. Its History.history attribute is a record of training loss values and metrics values at
         successive epochs, as well as validation loss values and validation metrics values (if applicable).
     """
-    checkpoint_callback = keras.callbacks.ModelCheckpoint(checkpoint_filepath,
-                                                          monitor="val_accuracy",
-                                                          save_best_only=True,
-                                                          save_weights_only=True)
+    checkpoint_callback = keras.callbacks.ModelCheckpoint(
+        checkpoint_filepath,
+        monitor="val_accuracy",
+        save_best_only=True,
+        save_weights_only=True,
+    )
 
     loss_fn = keras.losses.CategoricalCrossentropy()
 
@@ -203,17 +217,17 @@ def train_model(train_ds, val_ds,
     opt = tfa.optimizers.MovingAverage(opt)
     opt = tfa.optimizers.Lookahead(opt)
 
-    metrics = ["accuracy", tf.keras.metrics.MeanIoU(num_classes=34, name='mean_io_u')]
+    metrics = ["accuracy", tf.keras.metrics.MeanIoU(num_classes=34, name="mean_io_u")]
 
-    model.compile(optimizer=opt,
-                  loss=loss_fn,
-                  metrics=metrics)
+    model.compile(optimizer=opt, loss=loss_fn, metrics=metrics)
 
     try:
-        history = model.fit(train_ds,
-                            epochs=epochs,
-                            validation_data=val_ds,
-                            callbacks=[checkpoint_callback])
+        history = model.fit(
+            train_ds,
+            epochs=epochs,
+            validation_data=val_ds,
+            callbacks=[checkpoint_callback],
+        )
 
         model.load_weights(checkpoint_filepath)
     except Exception as e:
