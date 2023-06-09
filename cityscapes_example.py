@@ -14,7 +14,6 @@ from datetime import datetime
 
 import numpy as np
 import tensorflow as tf
-
 from dataset.Dataset import test_ds, train_ds, val_ds
 from src.Evolutionary_Algorithm import start_evolution
 

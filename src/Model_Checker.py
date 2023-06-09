@@ -5,8 +5,7 @@ from TFLITE_Converter import convert_to_tflite
 
 
 def is_edge_tpu_compatible(model):
-    """
-    Checks if a given Keras model is compatible with Edge TPU.
+    """Checks if a given Keras model is compatible with Edge TPU.
 
     Parameters:
     model : tensorflow.python.keras.engine.functional.Functional
@@ -46,8 +45,8 @@ def is_edge_tpu_compatible(model):
 
 
 def model_has_attention(model):
-    """
-    Checks if a given model contains multi head attention layers and whether they meet certain conditions.
+    """Checks if a given model contains multi head attention layers and whether they
+    meet certain conditions.
 
     Parameters:
     model : tensorflow.python.keras.engine.functional.Functional
@@ -90,8 +89,8 @@ def model_has_attention(model):
 
 
 def model_has_problem(model):
-    """
-    Checks if a given model contains any issues related to multi head attention layers and Edge TPU compatibility.
+    """Checks if a given model contains any issues related to multi head attention
+    layers and Edge TPU compatibility.
 
     Parameters:
     model : tensorflow.python.keras.engine.functional.Functional

@@ -3,7 +3,6 @@ import os
 import pickle
 
 import numpy as np
-
 from src.Compile_Edge_TPU import compile_edgetpu
 from src.Create_Model import create_model, train_model
 from src.Fitness_Function import calculate_fitness
@@ -13,8 +12,7 @@ from src.TFLITE_Converter import convert_to_tflite
 
 
 def create_first_population(population, num_classes=34):
-    """
-    Create an initial population for a genetic algorithm.
+    """Create an initial population for a genetic algorithm.
 
     This function initializes the first population for the genetic algorithm. It
     creates a population array filled with binary values. Each individual in the
@@ -68,8 +66,7 @@ def select_models(
     epochs=30,
     num_classes=34,
 ):
-    """
-    Select the best models from the population.
+    """Select the best models from the population.
 
     This function evaluates each individual in the population by creating a model
     from the individual and training it. The performance of the model on the test set
@@ -164,8 +161,7 @@ def select_models(
 
 
 def crossover(parent_arrays):
-    """
-    Perform the crossover operation.
+    """Perform the crossover operation.
 
     This function generates a child individual from two parent individuals
     by randomly selecting each gene from one of the parents.
@@ -186,8 +182,7 @@ def crossover(parent_arrays):
 
 
 def mutate(model_array, mutate_prob=0.05):
-    """
-    Perform the mutation operation.
+    """Perform the mutation operation.
 
     This function mutates an individual by flipping the value of a gene with a
     certain probability.
@@ -214,8 +209,7 @@ def mutate(model_array, mutate_prob=0.05):
 
 
 def create_next_population(parent_arrays, population=10, num_classes=34):
-    """
-    Create the next population.
+    """Create the next population.
 
     This function creates the next population by performing crossover and mutation
     operations on the best performing individuals from the previous population.
@@ -272,8 +266,7 @@ def start_evolution(
     population_array=None,
     time=None,
 ):
-    """
-    Run the genetic algorithm.
+    """Run the genetic algorithm.
 
     This function executes the genetic algorithm for a certain number of generations.
     In each generation, it selects the best individuals, creates the next population,

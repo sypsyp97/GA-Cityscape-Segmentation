@@ -1,15 +1,13 @@
 import tensorflow as tf
 import tensorflow_addons as tfa
 from keras import layers
-from tensorflow import keras
-
 from src.Decode_Block import decoded_block
 from src.Gene_Pool import conv_block
+from tensorflow import keras
 
 
 def get_spatial_dimensions(layer):
-    """
-    Retrieve the spatial dimensions of a layer's output.
+    """Retrieve the spatial dimensions of a layer's output.
 
     Parameters:
     ----------------
@@ -32,8 +30,8 @@ def get_spatial_dimensions(layer):
 
 
 def find_layers_with_downsampling(model):
-    """
-    Find all layers in a Keras model that reduce the spatial dimensions of their input.
+    """Find all layers in a Keras model that reduce the spatial dimensions of their
+    input.
 
     Parameters:
     ----------------
@@ -67,8 +65,7 @@ def find_layers_with_downsampling(model):
 
 
 def create_base_model(model_array, input_shape=(160, 160, 3)):
-    """
-    Create the base model used in the main U-Net model.
+    """Create the base model used in the main U-Net model.
 
     Parameters:
     ----------------
@@ -96,8 +93,7 @@ def create_base_model(model_array, input_shape=(160, 160, 3)):
 
 
 def create_model(model_array, input_shape=(160, 160, 3), num_classes=34):
-    """
-    Create a U-Net model based on the given architecture array.
+    """Create a U-Net model based on the given architecture array.
 
     Parameters:
     ----------------
@@ -160,8 +156,7 @@ def create_model(model_array, input_shape=(160, 160, 3), num_classes=34):
 
 
 def model_summary(model):
-    """
-    Print the summary of a Keras model and the number of its trainable weights.
+    """Print the summary of a Keras model and the number of its trainable weights.
 
     Parameters:
     ----------------
@@ -175,8 +170,7 @@ def model_summary(model):
 def train_model(
     train_ds, val_ds, model, epochs=30, checkpoint_filepath="checkpoints/checkpoint"
 ):
-    """
-    Train a Keras model on the provided datasets.
+    """Train a Keras model on the provided datasets.
 
     Parameters:
     ----------------

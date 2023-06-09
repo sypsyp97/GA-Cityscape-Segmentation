@@ -5,10 +5,9 @@ import numpy as np
 
 
 def calculate_fitness(acc, iou, inference_time):
-    """
-    Calculate the fitness of a model based on its accuracy, intersection over union (IoU),
-    and inference time. The fitness function is designed to prioritize models with
-    higher accuracy and IoU, and lower inference time.
+    """Calculate the fitness of a model based on its accuracy, intersection over union
+    (IoU), and inference time. The fitness function is designed to prioritize models
+    with higher accuracy and IoU, and lower inference time.
 
     Parameters:
     ----------------

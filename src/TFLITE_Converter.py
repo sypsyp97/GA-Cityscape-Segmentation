@@ -1,11 +1,10 @@
 import tensorflow as tf
-
 from dataset.Dataset import x_test
 
 
 def representative_data_gen():
-    """
-    Generator function for the representative dataset required by the TFLite converter for quantization.
+    """Generator function for the representative dataset required by the TFLite
+    converter for quantization.
 
     Yields:
     ---------------
@@ -17,8 +16,7 @@ def representative_data_gen():
 
 
 def convert_to_tflite(keras_model, generation=0, i=0, time=0):
-    """
-    Convert a Keras model to a TFLite model and save it to disk.
+    """Convert a Keras model to a TFLite model and save it to disk.
 
     Parameters:
     ----------------

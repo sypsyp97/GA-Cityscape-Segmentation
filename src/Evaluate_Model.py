@@ -4,8 +4,7 @@ from tqdm.notebook import tqdm
 
 
 def model_evaluation(trained_model, test_ds):
-    """
-    Evaluate a Keras model on a test dataset.
+    """Evaluate a Keras model on a test dataset.
 
     Parameters:
     ----------------
@@ -29,8 +28,7 @@ def model_evaluation(trained_model, test_ds):
 
 
 def evaluate_tflite_model(tflite_model, x_test, y_test, tfl_int8=True):
-    """
-    Evaluate a TensorFlow Lite model on a test dataset.
+    """Evaluate a TensorFlow Lite model on a test dataset.
 
     Parameters:
     ----------------

@@ -10,8 +10,7 @@ image = np.array(image)
 
 
 def inference_time_tpu(edgetpu_model_name):
-    """
-    Calculate the inference time for a model running on the Edge TPU.
+    """Calculate the inference time for a model running on the Edge TPU.
 
     Parameters:
     ----------------
